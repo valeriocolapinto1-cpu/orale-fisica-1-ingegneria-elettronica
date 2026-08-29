@@ -351,10 +351,12 @@ footer.app-footer::before{
   padding:3px 9px; border-radius:999px;
   color:var(--cyan); background:rgba(60,230,255,.09); border:1px solid rgba(60,230,255,.28);
 }
+.footer-mail{max-width:100%; overflow-wrap:anywhere;}
 @media (max-width:520px){
   .footer-top{flex-direction:column; align-items:stretch;}
   .footer-azioni{width:100%;}
-  .footer-link{flex:1; justify-content:center;}
+  .footer-link{flex:1 1 130px; justify-content:center;}
+  .footer-mail{flex-basis:100%;}
 }
 
 /* ---------- Scheda a schermo intero ---------- */
@@ -1795,6 +1797,7 @@ const CONTENUTI = [
       </div>
     </div>
     <div class="footer-azioni">
+      <a class="footer-link footer-mail" href="mailto:valeriocolapinto1@gmail.com">✉️ valeriocolapinto1@gmail.com</a>
       <a class="footer-link" href="https://github.com/valeriocolapinto1-cpu/orale-fisica-1-ingegneria-elettronica" target="_blank" rel="noopener">⭐ Codice su GitHub</a>
       <button type="button" class="footer-link" id="footer-su">↑ Torna su</button>
     </div>
