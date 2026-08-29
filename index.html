@@ -306,6 +306,57 @@ nav#navbar button.attivo::before{
 @keyframes navPop{from{width:0; opacity:0;} to{width:30px; opacity:1;}}
 #countdown-nav{display:none;}
 
+/* ---------- Footer ---------- */
+footer.app-footer{
+  max-width:840px; margin:0 auto; padding:26px 16px 34px;
+  border-top:1px solid var(--border); position:relative;
+  color:var(--fg2); font-size:.8rem; line-height:1.6;
+}
+footer.app-footer::before{
+  content:""; position:absolute; top:-1px; left:50%; transform:translateX(-50%);
+  width:min(240px,62%); height:1px; background:var(--grad-neon);
+  box-shadow:0 0 14px rgba(60,230,255,.7);
+}
+.footer-top{display:flex; flex-wrap:wrap; align-items:flex-start; justify-content:space-between; gap:16px;}
+.footer-brand{display:flex; align-items:flex-start; gap:11px; min-width:0;}
+.footer-brand .logo{font-size:1.32rem; line-height:1.2; filter:drop-shadow(0 4px 12px rgba(139,147,255,.6));}
+.footer-brand strong{
+  display:block; font-size:.98rem; font-weight:800; letter-spacing:.01em;
+  background:var(--grad-txt); -webkit-background-clip:text; background-clip:text; color:transparent;
+}
+.footer-brand span{display:block; color:var(--fg3); font-size:.76rem;}
+.footer-azioni{display:flex; flex-wrap:wrap; gap:8px;}
+.footer-link{
+  display:inline-flex; align-items:center; gap:6px; font:inherit; font-weight:700; cursor:pointer;
+  padding:7px 13px; border-radius:999px; text-decoration:none;
+  color:var(--fg2); background:var(--surface); border:1px solid var(--border);
+  transition:color var(--dur), background var(--dur), border-color var(--dur), transform var(--dur);
+}
+.footer-link:hover{color:var(--cyan); background:var(--surface-2); border-color:var(--border-2); transform:translateY(-1px);}
+.footer-note{
+  display:flex; flex-wrap:wrap; gap:8px 18px; margin-top:18px;
+  font-size:.76rem; color:var(--fg3);
+}
+.footer-note code{
+  font-size:.72rem; padding:1px 6px; border-radius:var(--r-xs);
+  background:var(--surface); border:1px solid var(--border); color:var(--fg2);
+}
+.footer-base{
+  display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:8px 14px;
+  margin-top:16px; padding-top:14px; border-top:1px solid var(--border);
+  font-size:.72rem; color:var(--fg3);
+}
+.footer-versione{
+  font-weight:800; letter-spacing:.08em; text-transform:uppercase; font-size:.66rem;
+  padding:3px 9px; border-radius:999px;
+  color:var(--cyan); background:rgba(60,230,255,.09); border:1px solid rgba(60,230,255,.28);
+}
+@media (max-width:520px){
+  .footer-top{flex-direction:column; align-items:stretch;}
+  .footer-azioni{width:100%;}
+  .footer-link{flex:1; justify-content:center;}
+}
+
 /* ---------- Scheda a schermo intero ---------- */
 #scheda-overlay{
   position:fixed; inset:0; z-index:80; background:var(--bg-soft);
@@ -1733,6 +1784,30 @@ const CONTENUTI = [
   <section id="vista-dimostrazioni" class="vista"></section>
   <section id="vista-formulario" class="vista"></section>
 </main>
+
+<footer class="app-footer no-print">
+  <div class="footer-top">
+    <div class="footer-brand">
+      <span class="logo">⚛️</span>
+      <div>
+        <strong>Fisica 1 — Orale Trainer</strong>
+        <span>Ripasso, simulazione d'orale e formulario — Ingegneria Elettronica, Roma</span>
+      </div>
+    </div>
+    <div class="footer-azioni">
+      <a class="footer-link" href="https://github.com/valeriocolapinto1-cpu/orale-fisica-1-ingegneria-elettronica" target="_blank" rel="noopener">⭐ Codice su GitHub</a>
+      <button type="button" class="footer-link" id="footer-su">↑ Torna su</button>
+    </div>
+  </div>
+  <div class="footer-note">
+    <span>🔒 I progressi restano nel browser (<code>localStorage</code>): nessun account, nessun server.</span>
+    <span>∑ Formule renderizzate con MathJax</span>
+  </div>
+  <div class="footer-base">
+    <span>© <span id="footer-anno"></span> · Materiale di studio non ufficiale, basato sul programma tipico di Fisica 1.</span>
+    <span class="footer-versione">v1</span>
+  </div>
+</footer>
 
 <nav id="navbar">
   <div class="brand">⚛️ Fisica 1<span>Orale Trainer</span></div>
@@ -3218,6 +3293,13 @@ function aggiornaCountdown() {
 }
 aggiornaCountdown();
 renderOggi();
+
+// Footer: anno corrente e ritorno a inizio pagina
+document.getElementById("footer-anno").textContent = new Date().getFullYear();
+document.getElementById("footer-su").addEventListener("click", function () {
+  const ridotto = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  window.scrollTo({ top: 0, behavior: ridotto ? "auto" : "smooth" });
+});
 // ============================================================
 // SIMULAZIONI INTERATTIVE — canvas leggeri, partono da soli
 // Ogni voce: funzione(box) -> funzione di cleanup
