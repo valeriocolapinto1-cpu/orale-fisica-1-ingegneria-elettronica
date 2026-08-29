@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="theme-color" content="#07080e">
+<meta name="theme-color" content="#05060c">
 <title>Fisica 1 — Orale Trainer</title>
 <script>
 window.MathJax = {
@@ -50,7 +50,10 @@ window.MathJax = {
   --dur:.24s; --spring:cubic-bezier(.34,1.4,.5,1);
   --nav-h:66px; --sidebar-w:250px;
 }
-*{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+*{box-sizing:border-box; -webkit-tap-highlight-color:transparent; touch-action:manipulation;}
+/* Navigazione da tastiera: prima non esisteva alcuno stato di focus */
+:focus-visible{outline:2px solid var(--cyan); outline-offset:3px; border-radius:var(--r-xs);}
+.card:focus-within{border-color:var(--border-2);}
 html{font-size:17px; background:var(--bg);}
 
 /* Griglia prospettica + scanline (livello sci-fi, dietro tutto) */
@@ -99,7 +102,7 @@ body::after{
   100%{transform:translate3d(-2%,2.5%,0) scale(1.12);}
 }
 
-h1,h2,h3,h4{line-height:1.22; letter-spacing:-.02em;}
+h1,h2,h3,h4{line-height:1.22; letter-spacing:-.02em; text-wrap:balance;}
 h2{
   font-size:1.9rem; font-weight:800; margin:.2em 0 .7em;
   background:var(--grad-txt); -webkit-background-clip:text; background-clip:text; color:transparent;
@@ -212,7 +215,7 @@ button:active{transform:scale(.96);}
   transition:transform var(--dur) var(--spring), border-color var(--dur), background var(--dur), box-shadow var(--dur);
 }
 .riga-argomento:hover{background:var(--card-2); border-color:var(--border-2); transform:translateX(4px); box-shadow:var(--glow);}
-.riga-argomento .titolo-arg{flex:1; font-size:.94rem;}
+.riga-argomento .titolo-arg{flex:1; min-width:0; overflow-wrap:anywhere; font-size:.94rem;}
 .riga-argomento .freccia{color:var(--fg3); transition:transform var(--dur), color var(--dur);}
 .riga-argomento:hover .freccia{color:var(--cyan); transform:translateX(3px);}
 .chip-arg{
@@ -306,6 +309,18 @@ nav#navbar button.attivo::before{
 @keyframes navPop{from{width:0; opacity:0;} to{width:30px; opacity:1;}}
 #countdown-nav{display:none;}
 
+/* ---------- Campo data d'esame ---------- */
+.riga-data{display:flex; flex-wrap:wrap; gap:10px; margin-top:12px;}
+.input-data{
+  flex:1 1 150px; min-width:0; min-height:48px;
+  font:inherit; color:var(--fg); background:var(--surface-2);
+  border:1px solid var(--border); border-radius:var(--r-sm); padding:12px 14px;
+  transition:border-color var(--dur), background var(--dur);
+}
+.input-data:hover{border-color:var(--border-2);}
+.riga-data .btn-primario{flex:0 0 auto;}
+.riga-data .btn-primario:disabled{opacity:.45; cursor:not-allowed; transform:none; box-shadow:none;}
+
 /* ---------- Footer ---------- */
 footer.app-footer{
   max-width:840px; margin:0 auto; padding:26px 16px 34px;
@@ -362,7 +377,7 @@ footer.app-footer::before{
 /* ---------- Scheda a schermo intero ---------- */
 #scheda-overlay{
   position:fixed; inset:0; z-index:80; background:var(--bg-soft);
-  overflow-y:auto; -webkit-overflow-scrolling:touch;
+  overflow-y:auto; -webkit-overflow-scrolling:touch; overscroll-behavior:contain;
   opacity:0; transform:translateY(26px) scale(.985); pointer-events:none;
   transition:opacity .28s ease, transform .32s var(--spring);
 }
@@ -639,7 +654,7 @@ const CONTENUTI = [
   erroriTipici: [
     "Confondere pulsazione ω (rad/s) e frequenza ν (Hz): ω = 2πν.",
     "Credere che il periodo dipenda dall'ampiezza: nel moto armonico ideale è isocrono.",
-    "Sbagliare i segni derivando: la velocità è −Aω sin(...), non +.",
+    "Sbagliare i segni derivando: la velocità è −Aω sin(…), non +.",
     "Dimenticare che A e φ vengono dalle condizioni iniziali, non dall'equazione del moto."
   ],
   intuizioneFisica: "Il moto armonico nasce ogni volta che un sistema, spostato dall'equilibrio, subisce un richiamo proporzionale allo spostamento. È il 'mattone universale' delle oscillazioni: qualsiasi potenziale liscio, vicino a un minimo, è approssimativamente parabolico, quindi quasi tutti i sistemi oscillano armonicamente per piccole perturbazioni.",
@@ -737,7 +752,7 @@ const CONTENUTI = [
   derivazione: [
     { passo: "Trasformazione delle posizioni (sistemi traslatori)", formula: "\\[ \\vec{r} = \\vec{r}' + \\vec{R}(t) \\]", commento: "r è la posizione nel sistema inerziale S, r' quella nel sistema mobile S', R la posizione dell'origine di S' vista da S. Niente rotazioni: gli assi restano paralleli." },
     { passo: "Derivo due volte rispetto al tempo", formula: "\\[ \\vec{v} = \\vec{v}' + \\vec{V}(t), \\qquad \\vec{a} = \\vec{a}' + \\vec{A}(t) \\]", commento: "V e A sono velocità e accelerazione di trascinamento dell'origine di S'. Le derivate dei versori sono nulle perché S' trasla senza ruotare." },
-    { passo: "Seconda legge nel sistema inerziale", formula: "\\[ \\vec{F} = m\\vec{a} = m(\\vec{a}' + \\vec{A}) \\]", commento: "F è la risultante delle sole forze vere (interazioni: gravità, contatto, elastiche...)." },
+    { passo: "Seconda legge nel sistema inerziale", formula: "\\[ \\vec{F} = m\\vec{a} = m(\\vec{a}' + \\vec{A}) \\]", commento: "F è la risultante delle sole forze vere (interazioni: gravità, contatto, elastiche…)." },
     { passo: "Riscrittura dal punto di vista di S'", formula: "\\[ m\\vec{a}' = \\vec{F} - m\\vec{A} \\equiv \\vec{F} + \\vec{F}_{app} \\]", commento: "In S' la legge di Newton 'funziona' solo aggiungendo la forza apparente F_app = −mA, opposta all'accelerazione di trascinamento e proporzionale alla massa." },
     { passo: "Caso dell'ascensore accelerato", formula: "\\[ N - mg = ma' \\;\\text{con}\\; \\vec{F}_{app} = -m\\vec{A} \\;\\Rightarrow\\; N = m(g + A) \\;\\text{(accelera in su)} \\]", commento: "Il peso apparente (letto dalla bilancia, cioè la normale N) aumenta se l'ascensore accelera verso l'alto, diminuisce verso il basso; N = 0 in caduta libera: assenza di peso apparente." }
   ],
@@ -1555,7 +1570,7 @@ const CONTENUTI = [
   definizioni: "Il primo principio della termodinamica è la conservazione dell'energia estesa ai fenomeni termici: la variazione di energia interna di un sistema è \\(\\Delta U = Q - W\\), dove Q è il calore assorbito DAL sistema e W il lavoro compiuto DAL sistema (convenzione usuale in Fisica 1). U è una funzione di stato (dipende solo dallo stato del sistema), mentre Q e W dipendono dalla trasformazione: in forma infinitesima \\(dU = \\delta Q - \\delta W\\), con δ a ricordare che calore e lavoro non sono differenziali esatti.",
   derivazione: [
     { passo: "Lavoro di espansione quasi-statica", formula: "\\[ \\delta W = F\\,dx = pA\\,dx = p\\,dV \\;\\Rightarrow\\; W = \\int_{V_1}^{V_2} p\\,dV \\]", commento: "Un gas che spinge un pistone di area A compie lavoro p dV. Graficamente W è l'area sotto la curva nel piano p-V: dipende dal cammino, non solo dagli estremi." },
-    { passo: "U è funzione di stato (fondamento sperimentale)", formula: "\\[ W_{adiabatico} = -\\Delta U \\;\\;\\text{indipendente dal cammino} \\]", commento: "Esperimenti di Joule: per portare adiabaticamente un sistema da uno stato A a uno stato B serve sempre lo stesso lavoro, comunque lo si esegua (mulinello, resistenza...). Questo permette di DEFINIRE U." },
+    { passo: "U è funzione di stato (fondamento sperimentale)", formula: "\\[ W_{adiabatico} = -\\Delta U \\;\\;\\text{indipendente dal cammino} \\]", commento: "Esperimenti di Joule: per portare adiabaticamente un sistema da uno stato A a uno stato B serve sempre lo stesso lavoro, comunque lo si esegua (mulinello, resistenza…). Questo permette di DEFINIRE U." },
     { passo: "Definizione operativa del calore", formula: "\\[ Q \\equiv \\Delta U + W \\]", commento: "In una trasformazione non adiabatica il bilancio W = −ΔU fallisce: il calore è per definizione l'energia scambiata per via non meccanica (differenza di temperatura). Il primo principio diventa: l'energia si conserva contando ENTRAMBI i canali." },
     { passo: "Applicazione alle trasformazioni del gas perfetto", formula: "\\[ \\begin{aligned} &\\text{isocora: } W = 0,\\; Q = \\Delta U = nc_V\\Delta T \\\\ &\\text{isobara: } W = p\\Delta V = nR\\Delta T,\\; Q = nc_p\\Delta T \\\\ &\\text{isoterma: } \\Delta U = 0,\\; Q = W = nRT\\ln\\frac{V_2}{V_1} \\\\ &\\text{adiabatica: } Q = 0,\\; W = -\\Delta U = nc_V(T_1 - T_2) \\end{aligned} \\]", commento: "Il quartetto fondamentale. Per l'isoterma: W = ∫nRT dV/V = nRT ln(V₂/V₁). Ogni riga discende dal primo principio più l'equazione di stato." },
     { passo: "Derivazione dell'equazione delle adiabatiche", formula: "\\[ 0 = nc_V\\,dT + p\\,dV \\;\\xrightarrow{pV = nRT}\\; \\frac{dT}{T} = -\\frac{R}{c_V}\\frac{dV}{V} \\;\\Rightarrow\\; TV^{\\gamma-1} = \\text{cost}, \\quad pV^{\\gamma} = \\text{cost} \\]", commento: "Da δQ = 0: dU = −pdV; elimino T con l'equazione di stato e integro (R/c_V = γ−1). Le adiabatiche nel piano p-V sono più ripide delle isoterme di un fattore γ." }
@@ -1814,14 +1829,14 @@ const CONTENUTI = [
 
 <nav id="navbar">
   <div class="brand">⚛️ Fisica 1<span>Orale Trainer</span></div>
-  <button data-vista="oggi" class="attivo"><span class="icona">🏠</span>Oggi</button>
-  <button data-vista="argomenti"><span class="icona">📚</span>Argomenti</button>
-  <button data-vista="simula"><span class="icona">🎤</span>Simula</button>
-  <button data-vista="quiz"><span class="icona">📝</span>Quiz</button>
-  <button data-vista="teoria"><span class="icona">🧠</span>Teoria</button>
-  <button data-vista="flashcard"><span class="icona">🃏</span>Flash</button>
-  <button data-vista="dimostrazioni"><span class="icona">📐</span>Dimostra</button>
-  <button data-vista="formulario"><span class="icona">∑</span>Formule</button>
+  <button data-vista="oggi" class="attivo"><span class="icona" aria-hidden="true">🏠</span>Oggi</button>
+  <button data-vista="argomenti"><span class="icona" aria-hidden="true">📚</span>Argomenti</button>
+  <button data-vista="simula"><span class="icona" aria-hidden="true">🎤</span>Simula</button>
+  <button data-vista="quiz"><span class="icona" aria-hidden="true">📝</span>Quiz</button>
+  <button data-vista="teoria"><span class="icona" aria-hidden="true">🧠</span>Teoria</button>
+  <button data-vista="flashcard"><span class="icona" aria-hidden="true">🃏</span>Flash</button>
+  <button data-vista="dimostrazioni"><span class="icona" aria-hidden="true">📐</span>Dimostra</button>
+  <button data-vista="formulario"><span class="icona" aria-hidden="true">∑</span>Formule</button>
   <div id="countdown-nav"></div>
 </nav>
 
@@ -2039,13 +2054,14 @@ function renderOggi() {
   const oggiIso = dataISO(oggiData());
   if (gg === null) {
     html += '<div class="avviso">📅 <b>Nessuna data d\'esame impostata.</b> Impostala per attivare il piano di studio giornaliero e il countdown.' +
-      '<div style="margin-top:10px"><input type="date" id="input-data-esame" min="' + oggiIso + '" onchange="impostaDataEsame(this.value)" style="width:100%;background:var(--sup2,#1c212c);color:var(--fg,#e9edf4);border:none;border-radius:10px;padding:12px;font:inherit;min-height:46px"></div></div>';
+      '<div class="riga-data"><input type="date" id="input-data-esame" class="input-data" min="' + oggiIso + '" aria-label="Data dell\'esame">' +
+      '<button type="button" class="btn-primario" id="btn-conferma-data" disabled>Conferma</button></div></div>';
   } else if (gg <= 0) {
     html += '<div class="avviso">🎓 <b>Oggi è il giorno dell\'esame!</b> In bocca al lupo. Ripassa il formulario e stai tranquillo: il lavoro l\'hai fatto. ' +
-      '<button class="btn-fantasma" style="min-height:34px;padding:0 6px" onclick="impostaDataEsame(null)">Rimuovi data</button></div>';
+      '<button class="btn-fantasma" style="min-height:44px;padding:0 10px" onclick="impostaDataEsame(null)">Rimuovi data</button></div>';
   } else {
     html += '<div class="avviso">📅 Mancano <b>' + gg + " giorn" + (gg === 1 ? "o" : "i") + '</b> all\'esame (' + formattaData(dataEsame()) + '). ' +
-      '<button class="btn-fantasma" style="min-height:34px;padding:0 6px" onclick="impostaDataEsame(null)">Rimuovi</button></div>';
+      '<button class="btn-fantasma" style="min-height:44px;padding:0 10px" onclick="impostaDataEsame(null)">Rimuovi</button></div>';
   }
 
   // Barra di preparazione complessiva
@@ -2128,6 +2144,25 @@ function renderOggi() {
   }
   el.innerHTML = html;
   animaAnelli(el);
+  collegaCampoData();
+}
+
+// Il picker nativo (soprattutto su iOS) emette "change" a ogni giro della rotella:
+// ridisegnare qui distruggerebbe il campo mentre il picker e' ancora aperto.
+// Salviamo subito il valore, ma rimandiamo il ridisegno a quando l'utente ha finito.
+function collegaCampoData() {
+  const inp = document.getElementById("input-data-esame");
+  if (!inp) return;
+  const btn = document.getElementById("btn-conferma-data");
+  inp.addEventListener("change", function () {
+    if (!inp.value) return;
+    stato.dataEsame = inp.value;
+    salvaStato();
+    aggiornaCountdown();
+    btn.disabled = false;
+  });
+  inp.addEventListener("blur", function () { if (inp.value) renderOggi(); });
+  btn.addEventListener("click", function () { inp.blur(); renderOggi(); });
 }
 
 // ============================================================
@@ -2701,7 +2736,7 @@ function rispondiMini(idx) {
   });
   const az = document.getElementById("mini-azioni");
   const ultima = miniQuiz.i >= miniQuiz.domande.length - 1;
-  az.innerHTML = '<div class="quiz-esito ' + (corretta ? "ok" : "no") + '">' +
+  az.innerHTML = '<div class="quiz-esito ' + (corretta ? "ok" : "no") + '" role="status">' +
     (corretta ? "✅ Giusto!" : "❌ La risposta corretta è evidenziata in verde.") + "</div>";
   const btn = document.createElement("button");
   btn.className = "btn-primario btn-largo";
@@ -2774,7 +2809,7 @@ function renderQuizIdle() {
   });
   html += '</div><p class="mini" style="margin-top:8px">La <b>flashcard a voce</b> mostra una domanda da esporre e poi la risposta: la valuti tu, come all\'orale.</p></div>';
   html += '<div class="card"><h3 style="margin-top:0">3 · Quante domande?</h3>' +
-    '<div class="sim-riga"><label>Numero</label><input type="range" id="quiz-n" min="5" max="25" step="1" value="' + p.n +
+    '<div class="sim-riga"><label for="quiz-n">Numero</label><input type="range" id="quiz-n" min="5" max="25" step="1" value="' + p.n +
     '" oninput="document.getElementById(\'quiz-n-out\').textContent=this.value"><output id="quiz-n-out">' + p.n + "</output></div></div>";
   if (st.fatti > 0) html += '<p class="mini">Quiz completati: ' + st.fatti + " · miglior punteggio: " + st.migliore + "%</p>";
   html += '<button class="btn-primario btn-largo" onclick="avviaQuiz()">🎯 Crea il quiz e parti</button>';
@@ -2869,7 +2904,7 @@ function rispondiQuiz(idx) {
     else b.classList.add("attenua");
   });
   const az = document.getElementById("quiz-azioni");
-  az.innerHTML = '<div class="quiz-esito ' + (corretta ? "ok" : "no") + '">' +
+  az.innerHTML = '<div class="quiz-esito ' + (corretta ? "ok" : "no") + '" role="status">' +
     (corretta ? "✅ Giusto!" : "❌ Non ci siamo: la risposta corretta è evidenziata in verde.") + "</div>";
   aggiungiAvantiQuiz();
 }
@@ -3079,7 +3114,7 @@ function renderTeoriaIdle() {
   });
   html += "</div></div>";
   html += '<div class="card"><h3 style="margin-top:0">3 · Quante domande?</h3>' +
-    '<div class="sim-riga"><label>Numero</label><input type="range" id="teoria-n" min="5" max="25" step="1" value="' + p.n +
+    '<div class="sim-riga"><label for="teoria-n">Numero</label><input type="range" id="teoria-n" min="5" max="25" step="1" value="' + p.n +
     '" oninput="document.getElementById(\'teoria-n-out\').textContent=this.value"><output id="teoria-n-out">' + p.n + "</output></div></div>";
   if (st.fatti > 0) html += '<p class="mini">Quiz di teoria completati: ' + st.fatti + " · miglior punteggio: " + st.migliore + "%</p>";
   html += '<button class="btn-primario btn-largo" onclick="avviaTeoria()">🧠 Genera il quiz di teoria</button>';
@@ -3171,7 +3206,7 @@ function mostraCarta() {
   const c = flash.carte[flash.i], n = flash.carte.length;
   const areaTag = flash.misto ? tagArea(c.area) : (flash.area ? tagArea(flash.area) : "");
   let html = '<div class="quiz-meta"><span>' + flash.titolo + '</span><span>🃏 ' + (flash.i + 1) + " / " + n + "</span></div>" +
-    '<div class="flash-scene"><div class="flip-card' + (flash.girata ? " girata" : "") + '" id="flip-card" onclick="giraCarta()">' +
+    '<div class="flash-scene"><div class="flip-card' + (flash.girata ? " girata" : "") + '" id="flip-card" role="button" tabindex="0" aria-label="Gira la carta" onclick="giraCarta()" onkeydown="if(event.key===\'Enter\'||event.key===\' \'){event.preventDefault();giraCarta();}">' +
     '<div class="flip-face flip-front"><div class="fc-tag">' + areaTag + (c.tag || "Domanda") + '</div>' +
     '<div class="fc-corpo"><div class="fc-domanda">' + c.d + '</div></div><div class="fc-hint">Tocca per girare ↻</div></div>' +
     '<div class="flip-face flip-back"><div class="fc-tag">' + (flash.misto ? c.arg : "Risposta") + '</div>' +
