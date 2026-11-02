@@ -1,6 +1,6 @@
 # Fisica 1 — Orale Trainer
 
-App web per preparare l'**esame orale di Fisica 1** (Ingegneria Elettronica, Roma) in 6 giorni — esame il **27 luglio**.
+App web non ufficiale per preparare l'**esame orale di Fisica 1** (Ingegneria Elettronica) in 6 giorni. Non è affiliata ad alcuna università o docente.
 
 **👉 Aprila qui: [valeriocolapinto1-cpu.github.io/orale-fisica-1-ingegneria-elettronica](https://valeriocolapinto1-cpu.github.io/orale-fisica-1-ingegneria-elettronica/)**
 
@@ -24,3 +24,12 @@ Interfaccia in **tema scuro futuristico** (HUD sci-fi): superfici in vetro (glas
 ## Uso
 
 Nessuna installazione: apri `index.html` nel browser (o il link GitHub Pages qui sopra). Serve la connessione solo al primo caricamento per il rendering delle formule (CDN MathJax).
+
+## Note legali e contatti
+
+Progetto **personale e non ufficiale**, non affiliato ad alcuna università o docente.
+Non riproduce testi, figure o soluzioni di terzi: criteri e provenienza in [`COMPLIANCE.md`](COMPLIANCE.md).
+
+- Codice: licenza MIT ([`LICENSE`](LICENSE)). Contenuti originali: uso personale di studio ([`LICENSE-CONTENT.md`](LICENSE-CONTENT.md)).
+- Componenti di terzi: [`THIRD-PARTY-NOTICES.md`](THIRD-PARTY-NOTICES.md).
+- Segnalazioni e rimozioni: [issue](https://github.com/valeriocolapinto1-cpu/orale-fisica-1-ingegneria-elettronica/issues/new?template=rimozione-contenuti.md) o [valeriocolapinto1@gmail.com](mailto:valeriocolapinto1@gmail.com). Il materiale contestato viene rimosso subito.
