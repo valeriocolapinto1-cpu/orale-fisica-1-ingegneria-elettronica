@@ -5,6 +5,7 @@ e, dove il testo è incluso nel repository, è indicato nella colonna *Note*.
 
 | Componente | Versione | Licenza | Note |
 |---|---|---|---|
+| Geist e Geist Mono (font) | variable | SIL Open Font License 1.1 | `assets/vendor/geist/` (licenza inclusa) |
 | MathJax | 3.2.2 (CDN jsDelivr) | Apache-2.0 | Con hash di integrità SRI; vedi pagina Privacy |
 
 Le dipendenze di sviluppo (strumenti di build e di test) non sono distribuite con il sito pubblicato.

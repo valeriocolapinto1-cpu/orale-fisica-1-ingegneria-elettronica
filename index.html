@@ -13,6 +13,7 @@
 <link rel="canonical" href="https://valeriocolapinto1-cpu.github.io/orale-fisica-1-ingegneria-elettronica/">
 <link rel="license" href="https://github.com/valeriocolapinto1-cpu/orale-fisica-1-ingegneria-elettronica/blob/main/LICENSE">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preload" href="assets/vendor/geist/Geist-Variable.woff2" as="font" type="font/woff2" crossorigin>
 <meta property="og:type" content="website">
 <meta property="og:locale" content="it_IT">
 <meta property="og:site_name" content="Fisica 1 — Orale Trainer">
@@ -29,6 +30,8 @@ window.MathJax = {
 </script>
 <script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js" integrity="sha384-Wuix6BuhrWbjDBs24bXrjf4ZQ5aFeFWBuKkFekO2t8xFU0iNaLQfp2K6/1Nxveei" crossorigin="anonymous" referrerpolicy="no-referrer" async></script>
 <style>
+@font-face{font-family:"Geist";src:url("assets/vendor/geist/Geist-Variable.woff2") format("woff2");font-weight:100 900;font-display:swap}
+@font-face{font-family:"Geist Mono";src:url("assets/vendor/geist/GeistMono-Variable.woff2") format("woff2");font-weight:100 900;font-display:swap}
 :root{
   color-scheme: dark;
   --bg:#05060c;
@@ -90,7 +93,7 @@ html::after{
 
 body{
   margin:0; background:transparent; color:var(--fg);
-  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,Helvetica,Arial,sans-serif;
+  font-family:"Geist",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
   line-height:1.65; letter-spacing:.005em;
   -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
   padding-bottom:calc(var(--nav-h) + env(safe-area-inset-bottom));
@@ -267,11 +270,12 @@ ul.puntata li::marker{color:var(--cyan);}
 /* ---------- Anelli di progresso ---------- */
 .anelli{display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-top:8px;}
 .anello{display:flex; flex-direction:column; align-items:center; gap:4px; text-align:center;}
-.anello svg{transform:rotate(-90deg); filter:drop-shadow(0 0 8px rgba(124,131,255,.5));}
+.anello svg{width:76px; height:76px; transform:rotate(-90deg); filter:drop-shadow(0 0 8px rgba(124,131,255,.5));}
 .anello .traccia{stroke:var(--surface-2); fill:none;}
 .anello .valore{fill:none; stroke-linecap:round; transition:stroke-dashoffset 1s var(--spring);}
 .anello .perc{font-weight:800; font-size:1.05rem; margin-top:-46px; height:40px; display:flex; align-items:center; font-variant-numeric:tabular-nums;}
 .anello .nome{font-size:.72rem; color:var(--fg2); margin-top:8px; line-height:1.3; font-weight:600;}
+@media (max-width:420px){ .anelli{gap:6px;} .anello svg{width:64px; height:64px;} .anello .perc{margin-top:-40px; height:34px; font-size:.95rem;} }
 .legenda-stati{display:flex; flex-wrap:wrap; gap:12px; margin-top:16px; font-size:.78rem; color:var(--fg2);}
 .legenda-stati span{display:flex; align-items:center;}
 
@@ -286,7 +290,7 @@ ul.puntata li::marker{color:var(--cyan);}
 .voti-03 button.sel{background:var(--grad); color:#fff; border-color:transparent; box-shadow:var(--glow);}
 #timer-display{
   font-size:3.6rem; font-weight:800; text-align:center; font-variant-numeric:tabular-nums; margin:16px 0; letter-spacing:.04em;
-  font-family:"SF Mono",ui-monospace,Menlo,Consolas,monospace;
+  font-family:"Geist Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
   background:var(--grad-txt); -webkit-background-clip:text; background-clip:text; color:transparent;
   filter:drop-shadow(0 0 22px rgba(60,230,255,.45));
 }
@@ -307,13 +311,16 @@ nav#navbar{
   height:calc(var(--nav-h) + env(safe-area-inset-bottom));
 }
 nav#navbar .brand{display:none;}
+nav#navbar{overflow-x:auto; scrollbar-width:none; scroll-snap-type:x proximity; overscroll-behavior-x:contain;}
+nav#navbar::-webkit-scrollbar{display:none;}
 nav#navbar button{
-  flex:1; min-width:0; background:none; border:none; border-radius:0; color:var(--fg2);
-  font-size:.52rem; font-weight:750; letter-spacing:0; white-space:nowrap; display:flex; flex-direction:column;
+  flex:1 0 auto; min-width:58px; scroll-snap-align:center; background:none; border:none; border-radius:0; color:var(--fg2);
+  font-size:.66rem; font-weight:700; letter-spacing:0; white-space:nowrap; display:flex; flex-direction:column;
   align-items:center; justify-content:center; gap:4px; min-height:var(--nav-h); padding:6px 1px;
   position:relative; transition:color var(--dur);
 }
-nav#navbar button .icona{font-size:1.22rem; line-height:1; transition:transform .3s var(--spring), filter var(--dur);}
+nav#navbar button .icona svg{width:22px; height:22px;}
+nav#navbar button .icona{display:grid; place-items:center; transition:transform .3s var(--spring), filter var(--dur);}
 nav#navbar button.attivo{color:var(--cyan);}
 nav#navbar button.attivo .icona{transform:translateY(-2px) scale(1.16); filter:drop-shadow(0 4px 12px rgba(60,230,255,.8));}
 nav#navbar button.attivo::before{
@@ -323,6 +330,7 @@ nav#navbar button.attivo::before{
 }
 @keyframes navPop{from{width:0; opacity:0;} to{width:30px; opacity:1;}}
 #countdown-nav{display:none;}
+#countdown:empty{display:none;}
 
 /* ---------- Campo data d'esame ---------- */
 .riga-data{display:flex; flex-wrap:wrap; gap:10px; margin-top:12px;}
@@ -349,12 +357,14 @@ footer.app-footer::before{
 }
 .footer-top{display:flex; flex-wrap:wrap; align-items:flex-start; justify-content:space-between; gap:16px;}
 .footer-brand{display:flex; align-items:flex-start; gap:11px; min-width:0;}
-.footer-brand .logo{font-size:1.32rem; line-height:1.2; filter:drop-shadow(0 4px 12px rgba(139,147,255,.6));}
+.footer-link svg{width:1.05em; height:1.05em; margin-right:.45em; vertical-align:-.18em;}
+.footer-brand .logo svg{width:28px; height:28px; color:var(--accent-chiaro);}
+.footer-brand .logo{line-height:1.2; filter:drop-shadow(0 4px 12px rgba(139,147,255,.6));}
 .footer-brand strong{
   display:block; font-size:.98rem; font-weight:800; letter-spacing:.01em;
   background:var(--grad-txt); -webkit-background-clip:text; background-clip:text; color:transparent;
 }
-.footer-brand span{display:block; color:var(--fg3); font-size:.76rem;}
+.footer-brand span{display:block; color:var(--fg2); font-size:.76rem;}
 .footer-azioni{display:flex; flex-wrap:wrap; gap:8px;}
 .footer-link{
   display:inline-flex; align-items:center; gap:6px; font:inherit; font-weight:700; cursor:pointer;
@@ -365,7 +375,7 @@ footer.app-footer::before{
 .footer-link:hover{color:var(--cyan); background:var(--surface-2); border-color:var(--border-2); transform:translateY(-1px);}
 .footer-note{
   display:flex; flex-wrap:wrap; gap:8px 18px; margin-top:18px;
-  font-size:.76rem; color:var(--fg3);
+  font-size:.76rem; color:var(--fg2);
 }
 .footer-note code{
   font-size:.72rem; padding:1px 6px; border-radius:var(--r-xs);
@@ -374,7 +384,7 @@ footer.app-footer::before{
 .footer-base{
   display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:8px 14px;
   margin-top:16px; padding-top:14px; border-top:1px solid var(--border);
-  font-size:.72rem; color:var(--fg3);
+  font-size:.72rem; color:var(--fg2);
 }
 .footer-versione{
   font-weight:800; letter-spacing:.08em; text-transform:uppercase; font-size:.66rem;
@@ -495,7 +505,7 @@ footer.app-footer::before{
 .quiz-flash-risposta .mini{display:block; margin-bottom:4px;}
 .quiz-punteggio{
   font-size:3.6rem; font-weight:800; text-align:center; font-variant-numeric:tabular-nums; margin:6px 0;
-  font-family:"SF Mono",ui-monospace,Menlo,Consolas,monospace;
+  font-family:"Geist Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
   background:var(--grad-txt); -webkit-background-clip:text; background-clip:text; color:transparent;
   filter:drop-shadow(0 0 24px rgba(60,230,255,.45)); animation:punteggioPop .6s var(--spring);
 }
@@ -513,7 +523,7 @@ footer.app-footer::before{
 }
 .flip-face .fc-tag{font-size:.68rem; text-transform:uppercase; letter-spacing:.16em; font-weight:800; margin-bottom:12px;}
 .flip-face .fc-corpo{flex:1; display:flex; flex-direction:column; justify-content:center;}
-.flip-face .fc-hint{margin-top:14px; font-size:.76rem; color:var(--fg3); text-transform:uppercase; letter-spacing:.1em; font-weight:700;}
+.flip-face .fc-hint{margin-top:14px; font-size:.76rem; color:var(--fg2); text-transform:uppercase; letter-spacing:.1em; font-weight:700;}
 .flip-front{background:var(--card-2); backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px);}
 .flip-front .fc-tag{color:var(--cyan);}
 .flip-front .fc-domanda{font-size:1.35rem; font-weight:800; line-height:1.35;}
@@ -538,7 +548,7 @@ footer.app-footer::before{
 .dim-goal .formula-riga + .formula-riga{border-top:1px solid var(--border);}
 .passo-dim{animation:esitoIn .38s var(--spring);}
 .dim-prompt{color:var(--fg2); font-size:.9rem; margin:6px 0 2px;}
-.dim-restanti{text-align:center; color:var(--fg3); font-size:.82rem; font-weight:700; letter-spacing:.03em; margin-top:10px;}
+.dim-restanti{text-align:center; color:var(--fg2); font-size:.82rem; font-weight:700; letter-spacing:.03em; margin-top:10px;}
 .dim-completa{text-align:center; padding:12px; border-radius:var(--r-sm); background:var(--st3-soft); border:1px solid rgba(55,224,160,.3); color:#9df3c8; font-weight:800; margin-top:6px;}
 .dim-nav{display:flex; align-items:center; gap:10px; margin-top:16px;}
 .dim-nav .conta{flex:1; text-align:center; font-variant-numeric:tabular-nums; font-weight:800; color:var(--fg2); letter-spacing:.04em;}
@@ -576,7 +586,7 @@ mjx-container[display="true"]{margin:.4em 0 !important;}
     flex-direction:column; justify-content:flex-start; align-items:stretch;
     padding:24px 14px; gap:5px; height:auto;
     background:linear-gradient(180deg,rgba(10,12,24,.68),rgba(6,8,16,.5));
-    border-top:none; border-right:1px solid var(--border);
+    border-top:none; border-right:1px solid var(--border); overflow:visible; scroll-snap-type:none;
   }
   nav#navbar .brand{
     display:flex; flex-direction:column; font-weight:800; font-size:1.2rem; line-height:1.3;
@@ -586,9 +596,9 @@ mjx-container[display="true"]{margin:.4em 0 !important;}
   nav#navbar .brand span{font-size:.76rem; color:var(--fg2); font-weight:650; -webkit-text-fill-color:var(--fg2);}
   nav#navbar button{
     flex:0 0 auto; flex-direction:row; justify-content:flex-start; gap:13px;
-    font-size:.92rem; padding:12px 15px; border-radius:var(--r-sm); min-height:48px; width:100%;
+    font-size:.92rem; min-width:0; padding:12px 15px; border-radius:var(--r-sm); min-height:48px; width:100%;
   }
-  nav#navbar button .icona{font-size:1.18rem;}
+  nav#navbar button .icona svg{width:20px; height:20px;}
   nav#navbar button:hover{background:var(--surface);}
   nav#navbar button.attivo{background:var(--grad-soft); box-shadow:inset 0 0 0 1px rgba(139,147,255,.32), var(--glow);}
   nav#navbar button.attivo::before{top:50%; left:0; transform:translateY(-50%); width:3px; height:22px; border-radius:0 4px 4px 0; animation:none;}
@@ -1802,7 +1812,7 @@ const CONTENUTI = [
 </script>
 
 <header class="app-header">
-  <h1>⚛️ Fisica 1 — Orale Trainer</h1>
+  <h1>Fisica 1 — Orale Trainer</h1>
   <span id="countdown"></span>
 </header>
 
@@ -1820,24 +1830,24 @@ const CONTENUTI = [
 <footer class="app-footer no-print">
   <div class="footer-top">
     <div class="footer-brand">
-      <span class="logo">⚛️</span>
+      <span class="logo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="1.6" fill="currentColor"/><ellipse cx="12" cy="12" rx="10" ry="4"/><ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(120 12 12)"/></svg></span>
       <div>
         <strong>Fisica 1 — Orale Trainer</strong>
         <span>Ripasso, simulazione d'orale e formulario — Ingegneria Elettronica</span>
       </div>
     </div>
     <div class="footer-azioni">
-      <a class="footer-link footer-mail" href="mailto:valeriocolapinto1@gmail.com">✉️ valeriocolapinto1@gmail.com</a>
-      <a class="footer-link" href="https://www.linkedin.com/in/valerio-colapinto" target="_blank" rel="noopener">💼 LinkedIn</a>
-      <a class="footer-link" href="https://github.com/valeriocolapinto1-cpu/orale-fisica-1-ingegneria-elettronica" target="_blank" rel="noopener">⭐ Codice su GitHub</a>
-      <a class="footer-link" href="note-legali.html">⚖️ Note legali</a>
-      <a class="footer-link" href="privacy.html">🔒 Privacy</a>
+      <a class="footer-link footer-mail" href="mailto:valeriocolapinto1@gmail.com"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>valeriocolapinto1@gmail.com</a>
+      <a class="footer-link" href="https://www.linkedin.com/in/valerio-colapinto" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 11v6M8 7.6v.01M12 17v-6M12 13a3 3 0 0 1 6 0v4"/></svg>LinkedIn</a>
+      <a class="footer-link" href="https://github.com/valeriocolapinto1-cpu/orale-fisica-1-ingegneria-elettronica" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M8 8l-4 4 4 4M16 8l4 4-4 4M14 5l-4 14"/></svg>Codice su GitHub</a>
+      <a class="footer-link" href="note-legali.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 3v18M6 21h12M5 7h14"/><path d="M5 7l-3 7a3 3 0 0 0 6 0zM19 7l-3 7a3 3 0 0 0 6 0z"/></svg>Note legali</a>
+      <a class="footer-link" href="privacy.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>Privacy</a>
       <button type="button" class="footer-link" id="footer-su">↑ Torna su</button>
     </div>
   </div>
   <div class="footer-note">
-    <span>🔒 I progressi restano nel browser (<code>localStorage</code>): nessun account, nessun server.</span>
-    <span>∑ Formule renderizzate con MathJax (caricato da jsDelivr)</span>
+    <span>I progressi restano nel browser (<code>localStorage</code>): nessun account, nessun server.</span>
+    <span>Formule renderizzate con MathJax (caricato da jsDelivr)</span>
   </div>
   <div class="footer-base">
     <span>© <span id="footer-anno"></span> Valerio Colapinto · Materiale di studio non ufficiale e indipendente, non affiliato a università o docenti; basato sul programma tipico di Fisica 1. Codice MIT, contenuti per uso personale di studio.</span>
@@ -1846,15 +1856,15 @@ const CONTENUTI = [
 </footer>
 
 <nav id="navbar">
-  <div class="brand">⚛️ Fisica 1<span>Orale Trainer</span></div>
-  <button data-vista="oggi" class="attivo"><span class="icona" aria-hidden="true">🏠</span>Oggi</button>
-  <button data-vista="argomenti"><span class="icona" aria-hidden="true">📚</span>Argomenti</button>
-  <button data-vista="simula"><span class="icona" aria-hidden="true">🎤</span>Simula</button>
-  <button data-vista="quiz"><span class="icona" aria-hidden="true">📝</span>Quiz</button>
-  <button data-vista="teoria"><span class="icona" aria-hidden="true">🧠</span>Teoria</button>
-  <button data-vista="flashcard"><span class="icona" aria-hidden="true">🃏</span>Flash</button>
-  <button data-vista="dimostrazioni"><span class="icona" aria-hidden="true">📐</span>Dimostra</button>
-  <button data-vista="formulario"><span class="icona" aria-hidden="true">∑</span>Formule</button>
+  <div class="brand">Fisica 1<span>Orale Trainer</span></div>
+  <button data-vista="oggi" class="attivo"><span class="icona" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3 11l9-8 9 8v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg></span>Oggi</button>
+  <button data-vista="argomenti"><span class="icona" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v16H6.5A2.5 2.5 0 0 0 4 21.5z"/><path d="M4 5.5v16"/></svg></span>Argomenti</button>
+  <button data-vista="simula"><span class="icona" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg></span>Simula</button>
+  <button data-vista="quiz"><span class="icona" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.6 2.2c-.8.5-1.1 1-1.1 1.8"/><circle cx="12" cy="16.6" r=".7" fill="currentColor"/></svg></span>Quiz</button>
+  <button data-vista="teoria"><span class="icona" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0 0 12 3z"/></svg></span>Teoria</button>
+  <button data-vista="flashcard"><span class="icona" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3" y="7" width="14" height="14" rx="2"/><path d="M7 7V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-2"/></svg></span>Flash</button>
+  <button data-vista="dimostrazioni"><span class="icona" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3 20L20 3v17z"/><path d="M8 20v-3M12 20v-5M16 20v-8"/></svg></span>Dimostra</button>
+  <button data-vista="formulario"><span class="icona" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M18 5H6l6 7-6 7h12"/></svg></span>Formule</button>
   <div id="countdown-nav"></div>
 </nav>
 
@@ -1998,7 +2008,10 @@ function mostraVista(nome) {
     document.getElementById("vista-" + v).classList.toggle("attiva", v === nome);
   });
   document.querySelectorAll("#navbar button").forEach(function (b) {
-    b.classList.toggle("attivo", b.dataset.vista === nome);
+    var on = b.dataset.vista === nome;
+    b.classList.toggle("attivo", on);
+    if (on) b.setAttribute("aria-current", "page"); else b.removeAttribute("aria-current");
+    if (on && b.scrollIntoView) b.scrollIntoView({ block: "nearest", inline: "center" });
   });
   if (nome === "oggi") renderOggi();
   if (nome === "argomenti") renderListaArgomenti();
@@ -2071,14 +2084,14 @@ function renderOggi() {
 
   const oggiIso = dataISO(oggiData());
   if (gg === null) {
-    html += '<div class="avviso">📅 <b>Nessuna data d\'esame impostata.</b> Impostala per attivare il piano di studio giornaliero e il countdown.' +
+    html += '<div class="avviso"><b>Nessuna data d\'esame impostata.</b> Impostala per attivare il piano di studio giornaliero e il countdown.' +
       '<div class="riga-data"><input type="date" id="input-data-esame" class="input-data" min="' + oggiIso + '" aria-label="Data dell\'esame">' +
       '<button type="button" class="btn-primario" id="btn-conferma-data" disabled>Conferma</button></div></div>';
   } else if (gg <= 0) {
-    html += '<div class="avviso">🎓 <b>Oggi è il giorno dell\'esame!</b> In bocca al lupo. Ripassa il formulario e stai tranquillo: il lavoro l\'hai fatto. ' +
+    html += '<div class="avviso"><b>Oggi è il giorno dell\'esame!</b> In bocca al lupo. Ripassa il formulario e stai tranquillo: il lavoro l\'hai fatto. ' +
       '<button class="btn-fantasma" style="min-height:44px;padding:0 10px" onclick="impostaDataEsame(null)">Rimuovi data</button></div>';
   } else {
-    html += '<div class="avviso">📅 Mancano <b>' + gg + " giorn" + (gg === 1 ? "o" : "i") + '</b> all\'esame (' + formattaData(dataEsame()) + '). ' +
+    html += '<div class="avviso">Mancano <b>' + gg + " giorn" + (gg === 1 ? "o" : "i") + '</b> all\'esame (' + formattaData(dataEsame()) + '). ' +
       '<button class="btn-fantasma" style="min-height:44px;padding:0 10px" onclick="impostaDataEsame(null)">Rimuovi</button></div>';
   }
 
@@ -2125,12 +2138,12 @@ function renderOggi() {
       });
     }
     if (!oggiP.nuovi.length && !oggiP.ripassi.length) {
-      html += '<p class="vuoto">Nessun nuovo argomento né ripasso in scadenza. 👏</p>';
+      html += '<p class="vuoto">Nessun nuovo argomento né ripasso in scadenza.</p>';
     }
     html += '<div class="etichetta-sez">Simulazione obbligatoria</div>';
     html += oggiP.simulazioneFatta
-      ? '<p>✅ Simulazione di oggi completata (' + (stato.simulazioni[dataISO(oggiData())] || 0) + ")</p>"
-      : '<button class="btn-primario btn-largo" onclick="mostraVista(\'simula\')">🎤 Fai la simulazione di oggi</button>';
+      ? '<p>Simulazione di oggi completata (' + (stato.simulazioni[dataISO(oggiData())] || 0) + ")</p>"
+      : '<button class="btn-primario btn-largo" onclick="mostraVista(\'simula\')">Fai la simulazione di oggi</button>';
   }
   html += "</div>";
 
@@ -2157,7 +2170,7 @@ function renderOggi() {
       if (g.soloRipasso && !(g.ripassi && g.ripassi.length) && !g.nuovi.length) {
         html += '<p class="vuoto">Ripasso libero dei più deboli + simulazioni.</p>';
       }
-      html += '<div class="mini" style="margin-top:8px">🎤 1 simulazione obbligatoria</div></div>';
+      html += '<div class="mini" style="margin-top:8px">1 simulazione obbligatoria</div></div>';
     });
   }
   el.innerHTML = html;
@@ -2233,15 +2246,15 @@ function apriScheda(id) {
     '<p class="mini">' + AREE[a.area] + " · Stato: <b>" + STATI[r.stato] + "</b>" +
     (r.prossimoRipasso ? " · prossimo ripasso: " + r.prossimoRipasso : "") + "</p>" +
     (prereq ? '<p class="mini">Prerequisiti: ' + prereq + "</p>" : "") +
-    '<div class="spiegazione-hero"><h4>💡 L\'idea in sintesi</h4><p>' + a.intuizioneFisica + "</p></div>" +
-    sezione("📖 Definizioni", "<p>" + a.definizioni + "</p>", true) +
-    sezione("🧮 Derivazione (nascosta: prova prima a voce!)", deriv, false) +
-    (typeof SIMS !== "undefined" && SIMS[a.id] ? sezione("🎬 Vedi in azione", '<div class="sim-box" id="sim-box"></div>', false, 'id="sim-det"') : "") +
-    sezione("📌 Ipotesi di validità", "<p>" + a.ipotesi + "</p>", false) +
-    sezione("🔭 Casi limite", "<p>" + a.casiLimite + "</p>", false) +
-    sezione("⚠️ Errori tipici", listaPunti(a.erroriTipici), false) +
-    sezione("✅ Checklist per l'orale", listaPunti(a.checklistOrale), false) +
-    sezione("❓ Domande di approfondimento", listaPunti(a.domandeApprofondimento), false) +
+    '<div class="spiegazione-hero"><h4>L\'idea in sintesi</h4><p>' + a.intuizioneFisica + "</p></div>" +
+    sezione("Definizioni", "<p>" + a.definizioni + "</p>", true) +
+    sezione("Derivazione (nascosta: prova prima a voce!)", deriv, false) +
+    (typeof SIMS !== "undefined" && SIMS[a.id] ? sezione("Vedi in azione", '<div class="sim-box" id="sim-box"></div>', false, 'id="sim-det"') : "") +
+    sezione("Ipotesi di validità", "<p>" + a.ipotesi + "</p>", false) +
+    sezione("Casi limite", "<p>" + a.casiLimite + "</p>", false) +
+    sezione("Errori tipici", listaPunti(a.erroriTipici), false) +
+    sezione("Checklist per l'orale", listaPunti(a.checklistOrale), false) +
+    sezione("Domande di approfondimento", listaPunti(a.domandeApprofondimento), false) +
     sezione("∑ Formule chiave", a.formuleChiave.map(function (f) { return '<div class="formula-riga">' + f + "</div>"; }).join(""), false) +
     '<div class="card no-print" id="mini-quiz"></div>';
 
@@ -2333,8 +2346,8 @@ function aggiornaSegmentatoSim() {
 function segmentatoModalita(compatto) {
   const m = modalitaSim();
   return '<div class="segmentato pieno" id="sim-modalita">' +
-    '<button class="' + (m === "facile" ? "sel" : "") + '" onclick="impostaModalitaSim(\'facile\')">🟢 Facile' + (compatto ? "" : " · con checklist") + "</button>" +
-    '<button class="' + (m === "difficile" ? "sel" : "") + '" onclick="impostaModalitaSim(\'difficile\')">🔴 Difficile' + (compatto ? "" : " · a memoria") + "</button></div>";
+    '<button class="' + (m === "facile" ? "sel" : "") + '" onclick="impostaModalitaSim(\'facile\')">Facile' + (compatto ? "" : " · con checklist") + "</button>" +
+    '<button class="' + (m === "difficile" ? "sel" : "") + '" onclick="impostaModalitaSim(\'difficile\')">Difficile' + (compatto ? "" : " · a memoria") + "</button></div>";
 }
 
 function renderSimulaIdle() {
@@ -2350,7 +2363,7 @@ function renderSimulaIdle() {
       ? "Mentre esponi vedrai la <b>checklist da seguire</b> e potrai spuntare i punti trattati: utile per imparare la scaletta."
       : "Nessun aiuto a schermo, come all'esame vero. Se ti blocchi potrai comunque rivelare la checklist con un tocco.") + "</p>" +
     '<p class="mini">Simulazioni fatte oggi: ' + fatte + "</p>" +
-    '<button class="btn-primario btn-largo" onclick="avviaSimulazione()">🎲 Estrai argomento e parti</button></div>';
+    '<button class="btn-primario btn-largo" onclick="avviaSimulazione()">Estrai argomento e parti</button></div>';
 }
 
 function avviaSimulazione() {
@@ -2361,7 +2374,7 @@ function avviaSimulazione() {
   el.innerHTML = "<h2>Simulazione in corso</h2>" +
     '<div class="card"><p class="mini">Argomento estratto:</p><h3 style="margin-top:.2em">' + tagArea(a.area) + a.titolo + "</h3>" +
     '<div id="timer-display">00:00</div>' +
-    "<p>🎤 <b>Esponi a voce alta</b>: definizioni, ipotesi, derivazione completa, casi limite, errori da evitare.</p>" +
+    "<p><b>Esponi a voce alta</b>: definizioni, ipotesi, derivazione completa, casi limite, errori da evitare.</p>" +
     segmentatoModalita(true) +
     '<div id="checklist-sim-box"></div>' +
     '<button class="btn-primario btn-largo" onclick="mostraChecklistSim()" style="margin-top:12px">Ho finito di esporre → autovalutazione</button>' +
@@ -2389,7 +2402,7 @@ function renderChecklistSimBox() {
     box.innerHTML = html;
     typeset(box);
   } else {
-    box.innerHTML = '<button class="btn-largo btn-fantasma" style="margin-top:6px" onclick="impostaModalitaSim(\'facile\')">👁 Sono bloccato: mostra la checklist</button>';
+    box.innerHTML = '<button class="btn-largo btn-fantasma" style="margin-top:6px" onclick="impostaModalitaSim(\'facile\')">Sono bloccato: mostra la checklist</button>';
   }
 }
 function toggleChecklistPunto(i) {
@@ -2459,8 +2472,8 @@ function chiudiChecklistSim() {
     "</b> · prossimo ripasso: " + recArg(a.id).prossimoRipasso + "</div>" +
     '<div class="card"><p>Ora rispondi a voce anche a queste, come farebbe il professore per andare a fondo:</p>' +
     listaPunti(a.domandeApprofondimento) + "</div>" +
-    '<button class="btn-primario btn-largo" onclick="avviaSimulazione()">🎲 Un\'altra simulazione</button>' +
-    '<button class="btn-largo" onclick="apriScheda(' + a.id + ')">📖 Rivedi la scheda completa</button>' +
+    '<button class="btn-primario btn-largo" onclick="avviaSimulazione()">Un\'altra simulazione</button>' +
+    '<button class="btn-largo" onclick="apriScheda(' + a.id + ')">Rivedi la scheda completa</button>' +
     '<button class="btn-largo btn-fantasma" onclick="renderSimulaIdle()">Fine</button>';
   window.scrollTo(0, 0);
   typeset(el);
@@ -2471,7 +2484,7 @@ function chiudiChecklistSim() {
 // ============================================================
 function renderFormulario() {
   const el = document.getElementById("vista-formulario");
-  let html = '<h2>Formulario</h2><button class="btn-largo no-print" onclick="window.print()" style="margin-bottom:14px">🖨️ Stampa il formulario</button>';
+  let html = '<h2>Formulario</h2><button class="btn-largo no-print" onclick="window.print()" style="margin-bottom:14px">Stampa il formulario</button>';
   Object.keys(AREE).forEach(function (area) {
     html += '<div class="card"><h3 style="margin-top:0">' + tagArea(area) + AREE[area] + "</h3>";
     CONTENUTI.filter(function (a) { return a.area === area; }).forEach(function (a) {
@@ -2489,10 +2502,10 @@ function renderFormulario() {
 // ============================================================
 let quiz = null;
 const QUIZ_TIPI = {
-  formulaArg: "🧮 Formula → argomento",
-  argFormula: "🧮 Argomento → formula",
-  errore: "🧠 Riconosci l'errore",
-  flash: "🧠 Flashcard a voce"
+  formulaArg: "Formula → argomento",
+  argFormula: "Argomento → formula",
+  errore: "Riconosci l'errore",
+  flash: "Flashcard a voce"
 };
 // Ambito di ciascun tipo di quiz: "pratica" (formule) o "teoria" (concetti)
 const QUIZ_AMBITO = {
@@ -2755,10 +2768,10 @@ function rispondiMini(idx) {
   const az = document.getElementById("mini-azioni");
   const ultima = miniQuiz.i >= miniQuiz.domande.length - 1;
   az.innerHTML = '<div class="quiz-esito ' + (corretta ? "ok" : "no") + '" role="status">' +
-    (corretta ? "✅ Giusto!" : "❌ La risposta corretta è evidenziata in verde.") + "</div>";
+    (corretta ? "Giusto!" : "La risposta corretta è evidenziata in verde.") + "</div>";
   const btn = document.createElement("button");
   btn.className = "btn-primario btn-largo";
-  btn.textContent = ultima ? "🏁 Vedi il risultato" : "Prossima domanda →";
+  btn.textContent = ultima ? "Vedi il risultato" : "Prossima domanda →";
   btn.onclick = function () {
     if (ultima) chiudiMiniQuiz(true);
     else { miniQuiz.i++; renderMiniQuiz(); }
@@ -2777,7 +2790,7 @@ function chiudiMiniQuiz(completato) {
   rerenderVistaAttiva(); // aggiorna dashboard/lista sotto l'overlay
   // aggiorno anche l'intestazione della scheda (stato/pallino/prossimo ripasso)
   const r = recArg(a.id);
-  const commento = frazione >= 0.9 ? "Padroneggiato: hai le idee chiarissime. 🎯"
+  const commento = frazione >= 0.9 ? "Padroneggiato: hai le idee chiarissime."
     : frazione >= 0.65 ? "Ci siamo: buona comprensione, rivedi i punti sbagliati."
       : frazione >= 0.4 ? "Comprensione parziale: ripassa la scheda e riprova."
         : "Da riprendere: rileggi definizioni e derivazione, poi rifai il quiz.";
@@ -2786,7 +2799,7 @@ function chiudiMiniQuiz(completato) {
       "Hai risposto correttamente a <b>" + miniQuiz.giuste + " su " + n + "</b> (" + Math.round(frazione * 100) + "%)</div>" +
       '<p style="margin:10px 0">' + commento + "</p>" +
       '<p class="mini">Nuovo stato: <b>' + STATI[r.stato] + "</b>" + (r.prossimoRipasso ? " · prossimo ripasso: " + r.prossimoRipasso : "") + "</p>" +
-      '<button class="btn-primario btn-largo" onclick="avviaMiniQuiz(' + a.id + ')">🔁 Rifai il quiz</button>' +
+      '<button class="btn-primario btn-largo" onclick="avviaMiniQuiz(' + a.id + ')">Rifai il quiz</button>' +
       '<button class="btn-largo btn-fantasma" onclick="chiudiScheda()">✓ Chiudi la scheda</button>';
   }
   miniQuiz = null;
@@ -2798,7 +2811,7 @@ function renderPannelloVerifica(id) {
   const a = CONTENUTI.find(function (x) { return x.id === id; });
   // stimo quante domande potrà generare per avvisare l'utente
   const nDom = generaMiniQuiz(a, 8).length;
-  box.innerHTML = '<h3 style="margin-top:0">🧪 Hai capito l\'argomento?</h3>' +
+  box.innerHTML = '<h3 style="margin-top:0">Hai capito l\'argomento?</h3>' +
     '<p class="mini">Mettiti alla prova con un mini-quiz di ' + nDom + ' domande a risposta multipla, generate dai contenuti di questa scheda. Il risultato aggiorna automaticamente il tuo stato e programma il ripasso.</p>' +
     '<button class="btn-primario btn-largo" onclick="avviaMiniQuiz(' + id + ')">▶️ Inizia il mini-quiz</button>';
 }
@@ -2819,7 +2832,7 @@ function renderQuizIdle() {
   });
   html += "</div></div>";
   html += '<div class="card"><h3 style="margin-top:0">2 · Tipo di domande</h3>' +
-    '<p class="mini" style="margin-top:-2px">🧮 <b>Pratica (formule)</b> · 🧠 <b>Teoria (concetti)</b></p>' +
+    '<p class="mini" style="margin-top:-2px"><b>Pratica (formule)</b> · <b>Teoria (concetti)</b></p>' +
     '<div class="quiz-scelte" id="quiz-tipi">';
   Object.keys(QUIZ_TIPI).forEach(function (t) {
     const sel = p.tipi.indexOf(t) >= 0;
@@ -2830,7 +2843,7 @@ function renderQuizIdle() {
     '<div class="sim-riga"><label for="quiz-n">Numero</label><input type="range" id="quiz-n" min="5" max="25" step="1" value="' + p.n +
     '" oninput="document.getElementById(\'quiz-n-out\').textContent=this.value"><output id="quiz-n-out">' + p.n + "</output></div></div>";
   if (st.fatti > 0) html += '<p class="mini">Quiz completati: ' + st.fatti + " · miglior punteggio: " + st.migliore + "%</p>";
-  html += '<button class="btn-primario btn-largo" onclick="avviaQuiz()">🎯 Crea il quiz e parti</button>';
+  html += '<button class="btn-primario btn-largo" onclick="avviaQuiz()">Crea il quiz e parti</button>';
   el.innerHTML = html;
   typeset(el);
 }
@@ -2886,14 +2899,14 @@ function mostraDomandaQuiz() {
   // se la domanda rivela il tema con le opzioni, nascondo l'area (niente spoiler)
   const tag = (q.tipo === "formulaArg" || q.nascondiArea) ? "" : tagArea(q.arg.area);
   const etichetta = q.etichetta || QUIZ_TIPI[q.tipo] || "";
-  let html = '<div class="quiz-meta"><span>Domanda ' + (quiz.i + 1) + " / " + n + '</span><span>✅ ' + quiz.giuste + "</span></div>" +
+  let html = '<div class="quiz-meta"><span>Domanda ' + (quiz.i + 1) + " / " + n + '</span><span>' + quiz.giuste + "</span></div>" +
     '<div class="quiz-barra"><span style="width:' + perc + '%"></span></div>' +
     '<div class="card"><div class="quiz-tipo-tag">' + tag + etichetta + "</div>" +
     '<div class="quiz-domanda">' + q.testo + "</div>";
   if (q.formula) html += '<div class="p-formula" style="font-size:1.15rem;margin:6px 0">' + q.formula + "</div>";
   if (q.contesto) html += '<div class="quiz-contesto">' + q.contesto + "</div>";
   if (q.tipo === "flash") {
-    html += '<div id="quiz-flash-area"><button class="btn-primario btn-largo" onclick="rivelaFlash()">👁 Mostra la risposta</button></div>';
+    html += '<div id="quiz-flash-area"><button class="btn-primario btn-largo" onclick="rivelaFlash()">Mostra la risposta</button></div>';
   } else {
     html += '<div class="quiz-opzioni" id="quiz-opzioni">';
     q.opzioni.forEach(function (o, idx) {
@@ -2923,7 +2936,7 @@ function rispondiQuiz(idx) {
   });
   const az = document.getElementById("quiz-azioni");
   az.innerHTML = '<div class="quiz-esito ' + (corretta ? "ok" : "no") + '" role="status">' +
-    (corretta ? "✅ Giusto!" : "❌ Non ci siamo: la risposta corretta è evidenziata in verde.") + "</div>";
+    (corretta ? "Giusto!" : "Non ci siamo: la risposta corretta è evidenziata in verde.") + "</div>";
   aggiungiAvantiQuiz();
 }
 function rivelaFlash() {
@@ -2933,8 +2946,8 @@ function rivelaFlash() {
     ? '<div class="quiz-flash-risposta"><span class="mini">Risposta / traccia</span>' + q.risposta + "</div>"
     : '<div class="quiz-flash-risposta"><span class="mini">Domanda aperta</span>Esponi la risposta a voce come faresti all\'orale, poi valuta come è andata.</div>';
   html += '<p class="mini" style="margin-top:10px">Come è andata?</p><div class="segmentato pieno">' +
-    '<button onclick="valutaFlash(false)">❌ Non la sapevo</button>' +
-    '<button onclick="valutaFlash(true)">✅ La sapevo</button></div>';
+    '<button onclick="valutaFlash(false)">Non la sapevo</button>' +
+    '<button onclick="valutaFlash(true)">La sapevo</button></div>';
   area.innerHTML = html;
   typeset(area);
 }
@@ -2954,7 +2967,7 @@ function aggiungiAvantiQuiz() {
   const ultima = quiz.i >= quiz.domande.length - 1;
   const btn = document.createElement("button");
   btn.className = "btn-primario btn-largo";
-  btn.textContent = ultima ? "🏁 Vedi i risultati" : "Prossima domanda →";
+  btn.textContent = ultima ? "Vedi i risultati" : "Prossima domanda →";
   btn.onclick = prossimaQuiz;
   az.appendChild(btn);
   btn.scrollIntoView({ block: "nearest", behavior: "smooth" });
@@ -2978,15 +2991,15 @@ function risultatiQuiz() {
     if (!r.corretta && !visti[r.arg.id]) { visti[r.arg.id] = true; sbagliati.push(r.arg); }
   });
   quiz.sbagliatiIds = sbagliati.map(function (a) { return a.id; });
-  const badge = perc >= 80 ? { t: "Ottimo! 🎉", c: "var(--st3-soft)", cc: "#8ef0bb" }
-    : perc >= 50 ? { t: "Ci sei quasi 💪", c: "var(--st2-soft)", cc: "#ffce7a" }
-      : { t: "Da ripassare 📚", c: "var(--st1-soft)", cc: "#ff9d9d" };
+  const badge = perc >= 80 ? { t: "Ottimo!", c: "var(--st3-soft)", cc: "#8ef0bb" }
+    : perc >= 50 ? { t: "Ci sei quasi", c: "var(--st2-soft)", cc: "#ffce7a" }
+      : { t: "Da ripassare", c: "var(--st1-soft)", cc: "#ff9d9d" };
   const el = quizVistaEl();
   let html = "<h2>" + (quiz.origine === "teoria" ? "Risultato — Teoria" : "Risultato del quiz") + "</h2>" +
     '<div class="card" style="text-align:center">' +
     '<div class="quiz-punteggio">' + quiz.giuste + " / " + n + "</div>" +
     '<div class="quiz-badge" style="background:' + badge.c + ";color:" + badge.cc + '">' + perc + "% · " + badge.t + "</div>" +
-    (record && stato[statKey].fatti > 1 ? '<p class="mini">🏅 Nuovo record personale!</p>' : "") + "</div>";
+    (record && stato[statKey].fatti > 1 ? '<p class="mini">Nuovo record personale!</p>' : "") + "</div>";
 
   // dettaglio per area
   const perArea = {};
@@ -3013,13 +3026,13 @@ function risultatiQuiz() {
     sbagliati.forEach(function (a) {
       html += '<button class="chip-arg bordo-st-' + recArg(a.id).stato + '" onclick="apriScheda(' + a.id + ')">' + pallino(a.id) + tagArea(a.area) + a.titolo + "</button>";
     });
-    html += '<button class="btn-largo" style="margin-top:10px" onclick="marcaDaRipassare()">📌 Segna questi argomenti come «da ripassare»</button></div>';
+    html += '<button class="btn-largo" style="margin-top:10px" onclick="marcaDaRipassare()">Segna questi argomenti come «da ripassare»</button></div>';
   } else {
-    html += '<div class="avviso">🌟 Nessun errore: hai risposto correttamente a tutto!</div>';
+    html += '<div class="avviso">Nessun errore: hai risposto correttamente a tutto!</div>';
   }
 
-  html += '<button class="btn-primario btn-largo" onclick="rigeneraQuiz()">🔁 Nuova serie (stesse impostazioni)</button>' +
-    '<button class="btn-largo btn-fantasma" onclick="esciQuiz()">⚙️ Cambia impostazioni</button>';
+  html += '<button class="btn-primario btn-largo" onclick="rigeneraQuiz()">Nuova serie (stesse impostazioni)</button>' +
+    '<button class="btn-largo btn-fantasma" onclick="esciQuiz()">Cambia impostazioni</button>';
   el.innerHTML = html;
   window.scrollTo(0, 0);
   typeset(el);
@@ -3030,7 +3043,7 @@ function marcaDaRipassare() {
   const el = quizVistaEl();
   const av = document.createElement("div");
   av.className = "avviso";
-  av.innerHTML = "✅ " + quiz.sbagliatiIds.length + " argoment" + (quiz.sbagliatiIds.length === 1 ? "o segnato" : "i segnati") +
+  av.innerHTML = "" + quiz.sbagliatiIds.length + " argoment" + (quiz.sbagliatiIds.length === 1 ? "o segnato" : "i segnati") +
     " come deboli: li ritroverai nel piano di oggi e con priorità nelle simulazioni.";
   el.insertBefore(av, el.firstChild);
   window.scrollTo(0, 0);
@@ -3095,7 +3108,7 @@ function tDomDefinizione(a, argomenti, diff) {
 function segmentatoDiff(diff) {
   return '<div class="segmentato pieno" id="teoria-diff">' +
     [1, 2, 3].map(function (d) {
-      return '<button class="' + (diff === d ? "sel" : "") + '" onclick="impostaTeoriaDiff(' + d + ')">' + ["🟢 Facile", "🟡 Medio", "🔴 Difficile"][d - 1] + "</button>";
+      return '<button class="' + (diff === d ? "sel" : "") + '" onclick="impostaTeoriaDiff(' + d + ')">' + ["Facile", "Medio", "Difficile"][d - 1] + "</button>";
     }).join("") + "</div>";
 }
 function descrizioneDiff(diff) {
@@ -3121,7 +3134,7 @@ function renderTeoriaIdle() {
   const p = prefTeoria();
   const st = stato.teoriaStat || { fatti: 0, migliore: 0 };
   let html = "<h2>Quiz di teoria</h2>" +
-    '<p class="mini" style="margin-top:-.4em">' + AMBITO + " · 🧠 Teoria (concetti, niente formule)</p>" +
+    '<p class="mini" style="margin-top:-.4em">' + AMBITO + " · Teoria (concetti, niente formule)</p>" +
     '<p class="mini">Domande concettuali generate al momento dai contenuti dei 33 argomenti: riconosci l\'argomento dall\'idea, da un passaggio della trattazione o dalla definizione. Niente formule, solo teoria.</p>';
   html += '<div class="card"><h3 style="margin-top:0">1 · Difficoltà</h3>' + segmentatoDiff(p.diff) +
     '<p class="mini" style="margin-top:8px">' + descrizioneDiff(p.diff) + "</p></div>";
@@ -3135,7 +3148,7 @@ function renderTeoriaIdle() {
     '<div class="sim-riga"><label for="teoria-n">Numero</label><input type="range" id="teoria-n" min="5" max="25" step="1" value="' + p.n +
     '" oninput="document.getElementById(\'teoria-n-out\').textContent=this.value"><output id="teoria-n-out">' + p.n + "</output></div></div>";
   if (st.fatti > 0) html += '<p class="mini">Quiz di teoria completati: ' + st.fatti + " · miglior punteggio: " + st.migliore + "%</p>";
-  html += '<button class="btn-primario btn-largo" onclick="avviaTeoria()">🧠 Genera il quiz di teoria</button>';
+  html += '<button class="btn-primario btn-largo" onclick="avviaTeoria()">Genera il quiz di teoria</button>';
   el.innerHTML = html;
   typeset(el);
 }
@@ -3192,7 +3205,7 @@ function renderFlashcardIdle() {
   const el = document.getElementById("vista-flashcard");
   let html = "<h2>Flashcard</h2>" +
     '<p class="mini">Un mazzo di flashcard per ogni argomento — idea, definizione, formule, ipotesi, casi limite, errori, domande e checklist. Tocca la carta per girarla.</p>' +
-    '<button class="btn-primario btn-largo" onclick="apriMazzoMescolato()" style="margin-bottom:8px">🎲 Mazzo misto (tutti gli argomenti)</button>';
+    '<button class="btn-primario btn-largo" onclick="apriMazzoMescolato()" style="margin-bottom:8px">Mazzo misto (tutti gli argomenti)</button>';
   Object.keys(AREE).forEach(function (area) {
     html += "<h3>" + tagArea(area) + AREE[area] + '</h3><ul class="lista-argomenti stagger">';
     CONTENUTI.filter(function (a) { return a.area === area; }).forEach(function (a) {
@@ -3289,12 +3302,12 @@ function mostraDimostrazione(scrolla) {
   const el = document.getElementById("vista-dimostrazioni");
   const a = dimo.lista[dimo.pos], n = a.derivazione.length;
   const perc = Math.round(100 * dimo.mostrati / n);
-  let html = '<div class="quiz-meta"><span>Dimostrazione ' + (dimo.pos + 1) + " / " + dimo.lista.length + '</span><span>📐 ' + dimo.mostrati + " / " + n + " passi</span></div>" +
+  let html = '<div class="quiz-meta"><span>Dimostrazione ' + (dimo.pos + 1) + " / " + dimo.lista.length + '</span><span>' + dimo.mostrati + " / " + n + " passi</span></div>" +
     '<div class="quiz-barra"><span style="width:' + perc + '%"></span></div>' +
     '<div class="card"><div class="quiz-tipo-tag">' + tagArea(a.area) + "DERIVAZIONE</div>" +
     '<div class="quiz-domanda">' + a.id + ". " + a.titolo + "</div>";
   if (a.formuleChiave && a.formuleChiave.length) {
-    html += '<div class="dim-goal"><span class="cap">🎯 Obiettivo — ricavare</span>' +
+    html += '<div class="dim-goal"><span class="cap">Obiettivo — ricavare</span>' +
       a.formuleChiave.map(function (f) { return '<div class="formula-riga">' + f + "</div>"; }).join("") + "</div>";
   }
   html += '<p class="dim-prompt"><b>Ipotesi:</b> ' + a.ipotesi + "</p></div>";
@@ -3319,7 +3332,7 @@ function mostraDimostrazione(scrolla) {
   html += '<div class="dim-nav"><button onclick="dimoPrec()" ' + (dimo.pos === 0 ? "disabled" : "") + ">‹ Prec</button>" +
     '<span class="conta">' + (dimo.pos + 1) + " / " + dimo.lista.length + "</span>" +
     '<button onclick="dimoSucc()" ' + (dimo.pos >= dimo.lista.length - 1 ? "disabled" : "") + ">Succ ›</button></div>" +
-    '<button class="btn-largo btn-fantasma" onclick="apriScheda(' + a.id + ')">📖 Apri la scheda completa</button>' +
+    '<button class="btn-largo btn-fantasma" onclick="apriScheda(' + a.id + ')">Apri la scheda completa</button>' +
     '<button class="btn-largo btn-fantasma" onclick="renderDimostrazioniIdle()">Torna all\'elenco</button>';
   el.innerHTML = html;
   typeset(el);
@@ -3343,7 +3356,7 @@ function dimoSucc() { if (dimo.pos < dimo.lista.length - 1) { dimo.pos++; dimo.m
 // ============================================================
 function aggiornaCountdown() {
   const gg = giorniAllEsame();
-  const testo = gg > 0 ? "⏳ " + gg + " g all'esame" : (gg === 0 ? "🎓 Esame oggi!" : "");
+  const testo = gg > 0 ? "" + gg + " g all'esame" : (gg === 0 ? "Esame oggi!" : "");
   document.getElementById("countdown").textContent = testo;
   document.getElementById("countdown-nav").textContent = testo;
 }
@@ -3669,7 +3682,7 @@ SIMS[13] = function (box) {
       ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(x + R * Math.cos(phi), y + R * Math.sin(phi)); ctx.stroke();
       ctx.font = "12px sans-serif"; ctx.fillStyle = SIM_COL.fg2;
       ctx.fillText(b.nome + "  (a = " + a.toFixed(2) + " m/s²)", margine, y - R - 6);
-      if (arrivato) { ctx.fillStyle = b.col; ctx.fillText("🏁", W - margine + 2, y + 4); }
+      if (arrivato) { ctx.fillStyle = b.col; ctx.fillRect(W - margine + 2, y - 6, 2, 12); }
     });
     if (tuttiArrivati && t - t0 > 0.5) t0 = t + 0.8; // pausa e si riparte
   });
