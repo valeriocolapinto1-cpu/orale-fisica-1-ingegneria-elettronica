@@ -1,5 +1,12 @@
 # Fisica 1 — Orale Trainer
 
+> **Il sito si è spostato.** Fisica 1 (Orale Trainer) ora fa parte di **Study Hub**, il sito di studio unico di Ingegneria Elettronica:
+> <https://valeriocolapinto1-cpu.github.io/study-hub/it/anno-1/fisica-1/>
+>
+> Le pagine pubblicate da questo repository rimandano alle pagine corrispondenti del nuovo sito (il service worker,
+> se c'era, si disattiva da solo). Il codice resta qui come archivio; la storia è conservata anche in
+> [`study-hub/legacy/`](https://github.com/valeriocolapinto1-cpu/study-hub/tree/main/legacy).
+
 App web non ufficiale per preparare l'**esame orale di Fisica 1** (Ingegneria Elettronica) in 6 giorni. Non è affiliata ad alcuna università o docente.
 
 **👉 Aprila qui: [valeriocolapinto1-cpu.github.io/orale-fisica-1-ingegneria-elettronica](https://valeriocolapinto1-cpu.github.io/orale-fisica-1-ingegneria-elettronica/)**
